@@ -65,9 +65,56 @@ def calculates_results_stats(results_dic):
                     a percentage or a count) where the key is the statistic's 
                      name (starting with 'pct' for percentage or 'n' for count)
                      and the value is the statistic's value. See comments above
-                     and the classroom Item XX Calculating Results for details
+                     and the previous topic Calculating Results in the class for details
                      on how to calculate the counts and statistics.
     """        
     # Replace None with the results_stats_dic dictionary that you created with 
     # this function 
-    return None
+    results_stats_dic = {}
+
+    count_images = 0
+
+    count_correct_dog_matches = 0
+    count_correct_non_dog_matches = 0
+
+    count_of_dog_images = 0
+    count_non_dog_images = 0
+
+    count_correct_breed_matches = 0
+    count_number_of_label_matches = 0
+
+    for key, value in results_dic.items():
+        # Increase the total images
+        count_images += 1
+
+        if value[3] == 1:  # Count dog images
+            count_of_dog_images += 1
+            if value[4] == 1:  # Number of correct dog matches
+                count_correct_dog_matches += 1
+        else:  # Count non dog images
+            count_non_dog_images += 1
+            if value[4] == 0:  # Number of correct Non Dog matches
+                count_correct_non_dog_matches += 1
+
+        # Number of label matches
+        if value[2] == 1:
+            count_number_of_label_matches += 1
+            # Number of correct breed matches
+            if value[3] == 1:
+                count_correct_breed_matches += 1
+
+    # Results to dictonary
+    results_stats_dic['n_images'] = count_images
+    results_stats_dic['n_dogs_img'] = count_of_dog_images
+    results_stats_dic['n_notdogs_img'] = count_non_dog_images
+    results_stats_dic['n_label'] = count_number_of_label_matches
+    results_stats_dic['n_correct_dogs'] = count_correct_dog_matches
+    results_stats_dic['n_correct_notdogs'] = count_correct_non_dog_matches
+    results_stats_dic['n_correct_breed'] = count_correct_breed_matches
+
+    results_stats_dic['pct_correct_dogs'] = (count_correct_dog_matches / count_of_dog_images) * 100
+    results_stats_dic['pct_correct_notdogs'] = (count_correct_non_dog_matches / count_non_dog_images) * 100
+    results_stats_dic['pct_correct_breed'] = (count_correct_breed_matches / count_of_dog_images) * 100
+    results_stats_dic['pct_correct_label'] = (count_number_of_label_matches / count_images) * 100
+
+    return results_stats_dic

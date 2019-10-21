@@ -18,6 +18,7 @@
 ##
 # Imports python modules
 from os import listdir
+from re import findall
 
 # TODO 2: Define get_pet_labels function below please be certain to replace None
 #       in the return statement with results_dic dictionary that you create 
@@ -42,4 +43,7 @@ def get_pet_labels(image_dir):
     """
     # Replace None with the results_dic dictionary that you created with this
     # function
-    return None
+    results_dic = {}
+    for file in listdir(image_dir):
+        results_dic[file] = findall('.+?(?= \d)', file.strip().lower().replace('_',' '))
+    return results_dic
